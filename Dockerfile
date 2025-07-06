@@ -7,6 +7,12 @@ WORKDIR /usr/src/app
 # Install FFmpeg
 RUN apt-get update && apt-get install -y ffmpeg
 
+# Install fontconfig and copy custom font
+# fontconfig helps FFmpeg find fonts more reliably
+RUN apt-get update && apt-get install -y fontconfig
+COPY Vazirmatn-Regular.ttf /usr/local/share/fonts/
+RUN fc-cache -fv # Rebuild font cache
+
 # Copy package.json and package-lock.json
 COPY package*.json ./
 
