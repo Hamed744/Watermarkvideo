@@ -48,7 +48,8 @@ app.post('/process-video', async (req, res) => {
 
         // قدم ۲: اعمال واترمارک و تبدیل به MP4 با FFmpeg
         console.log('Applying watermark and converting to MP4...');
-        const ffmpegCommand = `ffmpeg -i "${inputPath}" -vf "drawtext=text='هوش مصنوعی آلفا دانلود از گوگل پلی':x=w-text_w-10:y=h-text_h-10:fontcolor=black:box=1:boxcolor=white:boxborderw=5:fontsize=30" -c:v libx264 -preset veryfast -c:a aac -movflags +faststart "${outputPath}"`;
+        // --- خطی که تغییر می‌کند: اضافه شدن fontfile
+        const ffmpegCommand = `ffmpeg -i "${inputPath}" -vf "drawtext=text='هوش مصنوعی آلفا دانلود از گوگل پلی':x=w-text_w-10:y=h-text_h-10:fontcolor=black:box=1:boxcolor=white:boxborderw=5:fontsize=30:fontfile='/usr/local/share/fonts/Vazirmatn-Regular.ttf'" -c:v libx264 -preset veryfast -c:a aac -movflags +faststart "${outputPath}"`;
         
         await new Promise((resolve, reject) => {
             exec(ffmpegCommand, (error, stdout, stderr) => {
